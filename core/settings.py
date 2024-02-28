@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-k^8u^%slo5+@^t-wb2@l0&jsy3*jgmv_v1onxxut#ppz+g))!p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('PRODUCTION_ENVIRONMET', '') != 'true' #enquanto não existir variável, defina debug = true
+DEBUG = os.environ.get('PRODUCTION_ENVIRONMET', '').lower != 'true' #enquanto não existir variável, defina debug = true
 
 ALLOWED_HOSTS = [
    'HOST_ADDRESS',
@@ -80,18 +80,13 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 if not DEBUG:
-    DATABASES = {
-    'default': dj_database_url.parse(
-        os.environ.get('DATABASE_URL')
-        )
-}
+    DATABASES = {'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))}
 else:
     DATABASES = {
-        ' default': {
-            'ENGINE': 'django.db.backend',
-            'NAME': BASE_DIR / 'db.sqlit',
-    }
-}
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'db.sqlite3',
+        }}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
